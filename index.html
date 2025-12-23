@@ -234,6 +234,7 @@ rose.addEventListener("click", () => {
 
     // só depois da rosa abrir
     setTimeout(() => {
+      document.querySelector(".photo").style.display = "block";
       document.querySelectorAll(".photo").forEach((p, i) => {
         p.style.display = "block";
         p.style.left = Math.random() * 80 + "vw";
