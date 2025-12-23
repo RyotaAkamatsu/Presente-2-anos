@@ -88,9 +88,12 @@ button {
 /* ===== FOTOS ===== */
 .photo {
   position: absolute;
-  width: 120px;
+  width: min(80vw, 280px);
   opacity: 0;
+  display: none; /* ESCONDIDAS NO INÍCIO */
   animation: fadePhoto 6s infinite;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
 }
 
 @keyframes fadePhoto {
@@ -203,18 +206,25 @@ let opened = false;
 
 rose.addEventListener("click", () => {
   if (!opened) {
-    document.getElementById("clickText").style.display = "none";
-
-    rose.style.transform = "scale(1.2) rotate(20deg)";
-    rose.src = "imagens/aberta.png";
     opened = true;
 
-    document.querySelectorAll(".photo").forEach((p, i) => {
-      p.style.left = Math.random() * 80 + "vw";
-      p.style.top = Math.random() * 80 + "vh";
-      p.style.animationDelay = i * 2 + "s";
-    });
+    document.getElementById("clickText").style.display = "none";
 
+    // anima a rosa abrindo
+    rose.style.transform = "scale(1.2) rotate(20deg)";
+    rose.src = "imagens/aberta.png";
+
+    // só depois da rosa abrir, as fotos aparecem
+    setTimeout(() => {
+      document.querySelectorAll(".photo").forEach((p, i) => {
+        p.style.display = "block";
+        p.style.left = Math.random() * 80 + "vw";
+        p.style.top = Math.random() * 80 + "vh";
+        p.style.animationDelay = i * 2 + "s";
+      });
+    }, 2000);
+
+    // depois de tudo, some com fotos e mostra a carta
     setTimeout(() => {
       rose.style.display = "none";
       document.querySelectorAll(".photo").forEach(p => p.style.display = "none");
