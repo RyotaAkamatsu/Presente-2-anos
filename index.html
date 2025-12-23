@@ -106,6 +106,9 @@ button {
   70% { opacity: 1; }
   100% { opacity: 0; }
 }
+#overlay .photo {
+  display: none !important;
+}
 
 /* ===== CARTA ===== */
 #letter {
@@ -202,6 +205,12 @@ btn.addEventListener("click", () => {
   if (tries >= 16) {
     document.getElementById("start").style.display = "none";
     document.getElementById("overlay").style.display = "flex";
+
+    // 🔒 trava absoluta: esconde fotos ao entrar no overlay
+    document.querySelectorAll(".photo").forEach(p => {
+      p.style.display = "none";
+      p.classList.remove("animate");
+    });
   }
 });
 
