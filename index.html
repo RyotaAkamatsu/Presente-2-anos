@@ -80,19 +80,36 @@ button {
 
 /* ===== ROSA ===== */
 #rose {
-  width: 150px;
+  width: 160px;
   cursor: pointer;
-  transition: transform 2s;
+  transition: transform 1.2s ease;
+  z-index: 30; /* sempre acima das fotos */
 }
 
 /* ===== FOTOS ===== */
 .photo {
   position: absolute;
-  width: min(80vw, 280px);
-  display: none;
+  width: min(60vw, 420px); /* fotos maiores */
+  display: none;           /* escondidas até o momento certo */
   opacity: 0;
   border-radius: 16px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  z-index: 10; /* abaixo da rosa */
+  pointer-events: none; /* não atrapalham cliques na rosa */
+}
+
+/* classe que ativa o looping de fade (só adicionada via JS no momento certo) */
+.photo.show {
+  display: block;
+  animation: photoFade 6s ease-in-out infinite;
+}
+
+/* animação de fade in/out */
+@keyframes photoFade {
+  0%   { opacity: 0; transform: scale(0.98); }
+  20%  { opacity: 1; transform: scale(1); }
+  70%  { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(0.98); }
 }
 
 /* ===== CARTA ===== */
@@ -105,6 +122,7 @@ button {
   color: #333;
   overflow-y: auto;
   max-height: 80vh;
+  z-index: 40;
 }
 </style>
 </head>
@@ -139,20 +157,20 @@ for(let i=0;i<40;i++){
 <div id="overlay">
 
   <!-- ROSA FECHADA -->
-  <img src="imagens/fechada.png" id="rose">
-  <p id="clickText" style="color:white;">clique</p>
+  <img src="imagens/fechada.png" id="rose" alt="Rosa fechada">
+  <p id="clickText" style="color:white; margin-top:12px;">clique</p>
 
-  <!-- FOTOS -->
-  <img src="imagens/foto1.jpeg" class="photo">
-  <img src="imagens/foto2.jpeg" class="photo">
-  <img src="imagens/foto3.jpeg" class="photo">
-  <img src="imagens/foto4.jpeg" class="photo">
-  <img src="imagens/foto5.jpeg" class="photo">
-  <img src="imagens/foto6.jpeg" class="photo">
-  <img src="imagens/foto7.jpeg" class="photo">
-  <img src="imagens/foto8.jpeg" class="photo">
-  <img src="imagens/foto9.jpeg" class="photo">
-  <img src="imagens/foto10.jpeg" class="photo">
+  <!-- FOTOS (mantém escondidas até o momento do show) -->
+  <img src="imagens/foto1.jpeg"  class="photo" alt="">
+  <img src="imagens/foto2.jpeg"  class="photo" alt="">
+  <img src="imagens/foto3.jpeg"  class="photo" alt="">
+  <img src="imagens/foto4.jpeg"  class="photo" alt="">
+  <img src="imagens/foto5.jpeg"  class="photo" alt="">
+  <img src="imagens/foto6.jpeg"  class="photo" alt="">
+  <img src="imagens/foto7.jpeg"  class="photo" alt="">
+  <img src="imagens/foto8.jpeg"  class="photo" alt="">
+  <img src="imagens/foto9.jpeg"  class="photo" alt="">
+  <img src="imagens/foto10.jpeg" class="photo" alt="">
 
   <!-- CARTA -->
   <div id="letter">
@@ -163,24 +181,25 @@ for(let i=0;i<40;i++){
     <p>
       Meu amor,<br><br>
 
-  Eu fiz tudo isso porque você é a pessoa mais especial da minha vida.
-  Cada momento ao seu lado nesses dois anos me mostrou que amar você
-  é a melhor escolha que eu já fiz.<br><br>
+      Eu fiz tudo isso porque você é a pessoa mais especial da minha vida.
+      Cada momento ao seu lado nesses dois anos me mostrou que amar você
+      é a melhor escolha que eu já fiz.<br><br>
 
-  Você é meu sorriso nos dias difíceis, meu porto seguro,
-  minha melhor companhia e meu maior carinho.
-  Eu não consigo imaginar meu futuro sem você ao meu lado.<br><br>
+      Você é meu sorriso nos dias difíceis, meu porto seguro,
+      minha melhor companhia e meu maior carinho.
+      Eu não consigo imaginar meu futuro sem você ao meu lado.<br><br>
 
-  Obrigado por existir, por me amar do jeito que você ama
-  e por fazer da minha vida um lugar muito mais bonito.<br><br>
+      Obrigado por existir, por me amar do jeito que você ama
+      e por fazer da minha vida um lugar muito mais bonito.<br><br>
 
-  Eu te amo mais do que palavras conseguem explicar. ❤️
+      Eu te amo mais do que palavras conseguem explicar. ❤️
     </p>
 
   </div>
 </div>
 
 <script>
+/* lógica do botão que foge */
 let tries = 0;
 const btn = document.getElementById("runBtn");
 
@@ -197,59 +216,67 @@ btn.addEventListener("click", () => {
     document.getElementById("start").style.display = "none";
     document.getElementById("overlay").style.display = "flex";
 
-    // 🔒 trava absoluta: esconde fotos ao entrar no overlay
+    // garante que fotos estão escondidas ao entrar no overlay
     document.querySelectorAll(".photo").forEach(p => {
-      p.style.display = "none";
-      p.classList.remove("animate");
+      p.classList.remove('show');
+      p.style.display = 'none';
+      p.style.opacity = 0;
     });
   }
 });
 
+/* lógica da rosa e do aparecimento das fotos */
 const rose = document.getElementById("rose");
+const clickText = document.getElementById("clickText");
 let opened = false;
 
 rose.addEventListener("click", () => {
-  if (!opened) {
-    opened = true;
+  if (opened) return;
+  opened = true;
 
-    document.getElementById("clickText").style.display = "none";
+  // esconde o "clique"
+  clickText.style.display = 'none';
 
-    rose.style.transform = "scale(1.2) rotate(20deg)";
-    rose.src = "imagens/aberta.png";
+  // anima a rosa (visual) e troca imagem
+  rose.style.transform = "scale(1.12) rotate(8deg)";
+  // troque para a rosa aberta (verifique o arquivo)
+  rose.src = "imagens/aberta.png";
 
-    // só depois da rosa abrir
-    setTimeout(() => {
-  const photos = document.querySelectorAll(".photo");
+  // após a animação da rosa terminar, mostramos as fotos (staggered)
+  const delayBeforePhotos = 1000; // ajuste se precisar (ms)
+  setTimeout(() => {
+    const photos = Array.from(document.querySelectorAll(".photo"));
 
-  photos.forEach((p, i) => {
-    p.style.display = "block";
-    p.style.left = Math.random() * 70 + "vw";
-    p.style.top = Math.random() * 70 + "vh";
+    // posiciona fotos e exibe com atraso entre elas
+    photos.forEach((p, i) => {
+      // posição aleatória dentro de limites para não sair muito da tela
+      p.style.left = (5 + Math.random() * 70) + "vw";
+      p.style.top  = (10 + Math.random() * 70) + "vh";
 
-    // animação JS (fade in / fade out)
-    p.animate(
-      [
-        { opacity: 0 },
-        { opacity: 1 },
-        { opacity: 1 },
-        { opacity: 0 }
-      ],
-      {
-        duration: 6000,
-        delay: i * 1200,
-        iterations: Infinity,
-        easing: "ease-in-out"
-      }
-    );
-  });
-}, 2000);
+      // stagger: cada foto aparece com delay diferente
+      setTimeout(() => {
+        p.style.display = 'block';
+        // força reflow para garantir que display foi aplicado antes de adicionar classe (evita bugs)
+        void p.offsetWidth;
+        p.classList.add('show');
+      }, i * 900); // 900ms entre cada foto — ajuste como quiser
+    });
 
-    setTimeout(() => {
-      rose.style.display = "none";
-      document.querySelectorAll(".photo").forEach(p => p.style.display = "none");
-      document.getElementById("letter").style.display = "block";
-    }, 12000);
-  }
+  }, delayBeforePhotos);
+
+  // depois de um tempo total, some a rosa e as fotos e mostra a carta
+  const totalShowTime = 12000; // tempo total antes de ir pra carta (ms)
+  setTimeout(() => {
+    // some a rosa
+    rose.style.display = 'none';
+    // esconde fotos
+    document.querySelectorAll(".photo").forEach(p => {
+      p.classList.remove('show');
+      p.style.display = 'none';
+    });
+    // mostra carta
+    document.getElementById("letter").style.display = 'block';
+  }, totalShowTime);
 });
 </script>
 
