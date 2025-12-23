@@ -125,6 +125,24 @@ button {
   z-index: 40;
 }
 </style>
+  /* ===== BOTÃO SURPRESA ===== */
+.surprise-btn {
+  display: none; /* começa escondido */
+  margin-top: 25px;
+  padding: 14px 24px;
+  background: hotpink;
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  border-radius: 30px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.surprise-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
 </head>
 
 <body>
@@ -176,24 +194,99 @@ for(let i=0;i<40;i++){
   <div id="letter">
 
     <!-- ✨ AQUI VOCÊ COLOCA O TEXTO DA CARTA ✨ -->
-    <h2>Para você, meu amor ❤️</h2>
+<h2>Para você, meu amor ❤️</h2>
 
-    <p>
-      Meu amor,<br><br>
+<p>
+  Meu amor,<br><br>
 
-      Eu fiz tudo isso porque você é a pessoa mais especial da minha vida.
-      Cada momento ao seu lado nesses dois anos me mostrou que amar você
-      é a melhor escolha que eu já fiz.<br><br>
+  Antes de qualquer coisa, eu preciso te dizer o quanto tudo isso significa pra mim.
+  Estar ao seu lado, mesmo à distância, é uma das coisas mais importantes da minha vida.
+  Fazer parte dos seus dias, nem que seja em pequenos pedaços, e saber que você também
+  faz parte dos meus… isso muda tudo.
+  Você transforma meus dias comuns em algo que vale a pena viver,
+  e isso é algo que eu nunca vou saber agradecer o suficiente.<br><br>
 
-      Você é meu sorriso nos dias difíceis, meu porto seguro,
-      minha melhor companhia e meu maior carinho.
-      Eu não consigo imaginar meu futuro sem você ao meu lado.<br><br>
+  Às vezes eu paro pra pensar em como tudo começou, e ainda parece meio surreal.
+  A gente se conheceu em um jogo online.
+  Entre infinitas salas, infinitas possibilidades de não acontecer…
+  a gente caiu justamente na mesma.
+  Uma sala pequena, no vizinhos, simples — mas que acabou mudando completamente
+  a minha vida.<br><br>
 
-      Obrigado por existir, por me amar do jeito que você ama
-      e por fazer da minha vida um lugar muito mais bonito.<br><br>
+  A gente jogou, criou ideias, riu, se divertiu, passou o tempo junto
+  sem nem perceber ele passar.
+  E em cinco dias de conversa… cinco dias…
+  a gente decidiu namorar ksks.
+  Pode parecer ousado — e talvez tenha sido —
+  mas é exatamente assim que eu gosto.
+  Intenso, verdadeiro, sem medo.
+  Do nosso jeito.<br><br>
 
-      Eu te amo mais do que palavras conseguem explicar. ❤️
-    </p>
+  Nós somos um casal que sofre de saudade.
+  E sofre bastante.
+  Mas eu acho que isso também nos coloca à prova o tempo todo.
+  A gente joga pra descontrair,
+  faz calls pra matar a saudade,
+  tenta preencher o vazio da distância com risadas,
+  conversas bobas e silêncios confortáveis.
+  E mesmo assim, a saudade sempre encontra um jeito
+  de apertar o peito.<br><br>
+
+  Mas nada, absolutamente nada, se comparou à primeira vez
+  que eu te vi pessoalmente.
+  Ter você ali, de verdade… sua presença,
+  seu toque, seu abraço, seu beijo —
+  tudo aquilo que a distância sempre nos negou —
+  me fez entender algo muito maior.
+  Me fez perceber o tamanho do amor que a gente construiu.
+  Um amor que nasceu atrás de uma pequena tela,
+  mas que é infinito, imensurável, inefável.
+  Um amor que é nosso.<br><br>
+
+  Eu já não conheço tantas palavras que consigam explicar
+  o quanto eu te amo,
+  Emy Ryana da Silva Souza.
+  Mas de uma coisa eu tenho absoluta certeza:
+  você é o amor da minha vida.<br><br>
+
+  Agora, podemos estar distantes de novo.
+  A saudade voltou, o vazio também.
+  Mas eu sei que um dia tudo isso vai ser só uma memória.
+  Uma lembrança que vai surgir na minha mente
+  enquanto eu te beijo,
+  enquanto te abraço,
+  enquanto te tenho comigo —
+  do jeito que sempre deveria ser.<br><br>
+
+  Eu fiz tudo isso porque, desde o dia em que você entrou na minha vida,
+  tudo ficou diferente. Diferente no melhor sentido possível.
+  Você transformou momentos simples em lembranças especiais
+  e dias comuns em algo que vale a pena guardar no coração.<br><br>
+
+  Cada sorriso seu, cada conversa, cada detalhe seu
+  me lembra o quanto eu sou sortudo por te ter ao meu lado.
+  Você é meu refúgio, minha alegria, minha calma
+  e, ao mesmo tempo, minha maior aventura.<br><br>
+
+  Não importa o que o futuro traga,
+  eu sei que quero enfrentar tudo com você.
+  Segurando sua mão, rindo das besteiras,
+  superando os dias difíceis e celebrando cada pequena vitória.<br><br>
+
+  Obrigado por ser exatamente quem você é.
+  Obrigado por existir.
+  Obrigado por me escolher todos os dias.<br><br>
+
+  Eu te amo mais do que consigo explicar com palavras,
+  e esse site é só uma tentativa pequena
+  de mostrar um sentimento gigante. ❤️
+</p>
+    <a href="https://www.roblox.com/share?code=097fad397bc9a6488bf60b8769fd46f4&type=ExperienceDetails&stamp=1766510406957"
+   target="_blank"
+   class="surprise-btn"
+   id="surpriseBtn">
+  Clique aqui para mais uma surpresinha 🎁
+</a>
 
   </div>
 </div>
@@ -275,7 +368,15 @@ rose.addEventListener("click", () => {
       p.style.display = 'none';
     });
     // mostra carta
-    document.getElementById("letter").style.display = 'block';
+const letter = document.getElementById("letter");
+const surpriseBtn = document.getElementById("surpriseBtn");
+
+letter.style.display = 'block';
+
+// pequeno atraso opcional para dar impacto
+setTimeout(() => {
+  surpriseBtn.style.display = 'inline-block';
+}, 800);
   }, totalShowTime);
 });
 </script>
